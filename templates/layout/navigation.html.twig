@@ -1,0 +1,33 @@
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark mb-2">
+    <div class="container">
+        <a class="navbar-brand" href="#">Notifyer</a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link" title="{% trans %}navi.home{% endtrans %}" href="{{ path('home') }}">
+                        <span class="fas fa-home"></span> {% trans %}navi.home{% endtrans %}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" title="{% trans %}navi.inbound{% endtrans %}" href="{{ path('inbound') }}">
+                        <span class="fas fa-arrow-down"></span> {% trans %}navi.inbound{% endtrans %}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" title="{% trans %}navi.outbound{% endtrans %}" href="{{ path('outbound') }}">
+                        <span class="fas fa-arrow-up"></span> {% trans %}navi.outbound{% endtrans %}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="https://padhie.de/impressum.html">
+                        <span class="fas fa-list-alt"></span> {% trans %}navi.imprint{% endtrans %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

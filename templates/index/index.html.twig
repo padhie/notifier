@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>{% trans with {'name': username} %} page.home.name {% endtrans %}</h1>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Inbound
+                        <span class="badge badge-info">{{ countInbound }}</span>
+                    </h5>
+                    <a href="{{ path('inbound') }}" class="btn btn-primary">List</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Outbound
+                        <span class="badge badge-info">{{ countOutbound }}</span>
+                    </h5>
+                    <a href="#" class="btn btn-primary">List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

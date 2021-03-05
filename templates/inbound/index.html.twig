@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="example-wrapper">
+
+        {{ form_start(form) }}
+
+        <div class="container">
+
+            {{ form_errors(form) }}
+
+
+            {% for i in 0..maxIndex %}
+
+                {% set idField=['id_', i]|join %}
+                {% set nameField=['name_', i]|join %}
+                {% set hashField=['hash_', i]|join %}
+                {% set displayRow=i+1 %}
+
+                <div class="row">
+                    {{ form_row(attribute(form, idField)) }}
+
+                    <div class="col-md-2">
+                        <span class="badge badge-info">{{ displayRow }}</span>
+                    </div>
+
+                    <div class="col-md-5">
+                        {{ form_row(attribute(form, nameField)) }}
+                    </div>
+
+                    <div class="col-md-5">
+                        {{ form_row(attribute(form, hashField)) }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            {{ form_row(attribute(form, 'submit')) }}
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}

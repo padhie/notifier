@@ -1,0 +1,21 @@
+navi:
+    home: "Home"
+    inbound: "Inbound"
+    outbound: "Outbound"
+    imprint: "Imprint"
+
+success:
+    saved: "Successful saved!"
+
+form:
+    name: "Name: "
+    hash: "Hash: "
+    submit: "Save"
+    inbound: "Inbound"
+    url: "Url"
+    body: "Body"
+
+page:
+    home:
+        new: "New"
+        list: "List"
