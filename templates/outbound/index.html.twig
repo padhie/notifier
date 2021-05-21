@@ -18,6 +18,7 @@
                     {% set inboundField=['inbound_', i]|join %}
                     {% set nameField=['name_', i]|join %}
                     {% set urlField=['url_', i]|join %}
+                    {% set typeField=['type_', i]|join %}
                     {% set bodyField=['body_', i]|join %}
                     {% set displayRow=i+1 %}
 
@@ -31,6 +32,7 @@
                                     {{ form_row(attribute(form, nameField)) }} <br />
                                     {{ form_row(attribute(form, inboundField)) }} <br />
                                     {{ form_row(attribute(form, urlField)) }} <br />
+                                    {{ form_row(attribute(form, typeField)) }} <br />
                                     {{ form_label(attribute(form, bodyField)) }} <br />
                                     {{ form_widget(attribute(form, bodyField)) }}
                                 </p>

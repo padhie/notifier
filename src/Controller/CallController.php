@@ -4,15 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Outbound;
 use App\Repository\InboundRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class CallController extends AbstractController
+final class CallController extends AbstractController
 {
+    private const PARAM_PATTERN = '${param.%s}';
+
     private HttpClientInterface $client;
     private InboundRepository $inboundRepository;
 
@@ -38,18 +40,38 @@ class CallController extends AbstractController
                 ->setStatusCode(404);
         }
 
+        $success = 0;
+        $error = 0;
         foreach ($inbound->getOutbounds() as $outbound) {
-            $this->executeCall($request, $outbound);
+            $result = $this->executeCall($request, $outbound);
+            if ($result === true) {
+                $success++;
+            } else {
+                $error++;
+            }
         }
 
-        return (new Response())
-            ->setStatusCode(200);
+        $responseBody = json_encode(
+            [
+                'success' => $success,
+                'error' => $error,
+            ],
+            JSON_THROW_ON_ERROR
+        );
+
+        $response = new Response();
+        $response->setStatusCode(200);
+        $response->setContent($responseBody);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
-    private function executeCall(Request $request, Outbound $outbound): void
+    private function executeCall(Request $request, Outbound $outbound): bool
     {
         $url = $outbound->getUrl();
         $body = $outbound->getBody();
+        $type = $outbound->getType();
 
         $method = 'GET';
         if ($body !== '') {
@@ -57,13 +79,20 @@ class CallController extends AbstractController
         }
 
         foreach($request->query->getIterator() as $key => $value) {
-            $url = str_replace($key, $value, $url);
-            $body = str_replace($key, $value, $body);
+            $search = sprintf(self::PARAM_PATTERN, $key);
+            $url = str_replace($search, $value, $url);
+            $body = str_replace($search, $value, $body);
         }
 
         foreach($request->request->getIterator() as $key => $value) {
-            $url = str_replace($key, $value, $url);
-            $body = str_replace($key, $value, $body);
+            $search = sprintf(self::PARAM_PATTERN, $key);
+            $url = str_replace($search, $value, $url);
+            $body = str_replace($search, $value, $body);
+        }
+
+        $header = [];
+        if ($type === 'json') {
+            $header['Content-Type'] = 'application/json';
         }
 
         try {
@@ -73,10 +102,13 @@ class CallController extends AbstractController
                 [
                     'timeout' => 1,
                     'body' => $body,
+                    'headers' => $header,
                 ]
             );
-        } catch (TransportExceptionInterface $e) {
-            // do nothing
+        } catch (Exception $exception) {
+            return false;
         }
+
+        return true;
     }
 }

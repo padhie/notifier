@@ -25,6 +25,7 @@ use Symfony\Component\Security\Core\Security;
 class OutboundController extends AbstractController
 {
     private const MAX_OUTBOUND = 20;
+    private const FORM_TYPES_NAME = ['form.type.raw', 'form.type.json'];
 
     private Security $security;
     private FormFactoryInterface $formFactory;
@@ -50,6 +51,7 @@ class OutboundController extends AbstractController
     public function index(Request $request): Response
     {
         $username = $this->security->getUser()->getUsername();
+
         $inbounds = $this->inboundRepository->findBy([
             'username' => $username,
         ]);
@@ -77,6 +79,7 @@ class OutboundController extends AbstractController
             $inboundId = (int)$formData['inbound_' . $i];
             $name = $formData['name_' . $i];
             $url = $formData['url_' . $i];
+            $type = $formData['type_' . $i];
             $body = $formData['body_' . $i];
 
             if ($id !== '' && $name === '') {
@@ -93,10 +96,15 @@ class OutboundController extends AbstractController
                 continue;
             }
 
+            if ($id === '' && $name === '') {
+                continue;
+            }
+
             if ($id === '' && $name !== '') {
                 $outbound = (new Outbound())
                     ->setName($name)
                     ->setUrl($url)
+                    ->setType($type)
                     ->setBody($body)
                     ->setInbound($inbound);
 
@@ -110,6 +118,7 @@ class OutboundController extends AbstractController
                 ->setName($name)
                 ->setInbound($inbound)
                 ->setUrl($url)
+                ->setType($type)
                 ->setBody($body)
                 ->setUpdatedAt(new DateTimeImmutable());
             $this->outboundRepository->update($outbound);
@@ -142,6 +151,7 @@ class OutboundController extends AbstractController
                 'inbound' => $outbound->getInbound()->getId(),
                 'name' => $outbound->getName(),
                 'url' => $outbound->getUrl(),
+                'type' => $outbound->getType(),
                 'body' => $outbound->getBody(),
             ]);
 
@@ -169,6 +179,11 @@ class OutboundController extends AbstractController
 
     private function createFormElementGroup(int $i, array $choices, FormBuilderInterface $formBuilder, array $data): void
     {
+        $typeChoice = array_combine(
+            self::FORM_TYPES_NAME,
+            Outbound::ALLOWED_TYPES
+        );
+
         $formBuilder
             ->add('id_' . $i, HiddenType::class, [
                 'data' => $data['id'] ?? null,
@@ -188,6 +203,12 @@ class OutboundController extends AbstractController
                 'label' => 'form.url',
                 'data' => $data['url'] ?? null,
                 'required' => false,
+            ])
+            ->add('type_' . $i, ChoiceType::class, [
+                'label' => 'form.type.main',
+                'data' => $data['type'] ?? null,
+                'required' => false,
+                'choices' => $typeChoice,
             ])
             ->add('body_' . $i, TextareaType::class, [
                 'label' => 'form.body',

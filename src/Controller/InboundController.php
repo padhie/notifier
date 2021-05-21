@@ -65,6 +65,10 @@ class InboundController extends AbstractController
             $id = $formData['id_' . $i];
             $name = $formData['name_' . $i];
 
+            if ($id === '' && $name === '') {
+                continue;
+            }
+
             if ($id !== '' && $name === '') {
                 $this->inboundRepository->deleteById($id);
 

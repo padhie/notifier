@@ -20,7 +20,7 @@
                 <div class="row">
                     {{ form_row(attribute(form, idField)) }}
 
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <span class="badge badge-info">{{ displayRow }}</span>
                     </div>
 
@@ -30,6 +30,13 @@
 
                     <div class="col-md-5">
                         {{ form_row(attribute(form, hashField)) }}
+                    </div>
+
+                    <div class="col-md-1">
+                        {% set hash=form.children[hashField].vars.data %}
+                        {% if hash is not empty %}
+                            <a href="{{ path('call', {hash:hash}) }}" target="_blank"><span class="fas fa-external-link-alt"></span></a>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

@@ -6,9 +6,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.2",
@@ -16,6 +17,7 @@
         "doctrine/orm": "^2.8",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
+        "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.2.*",
         "symfony/console": "5.2.*",
         "symfony/dotenv": "5.2.*",
@@ -27,7 +29,7 @@
         "symfony/intl": "5.2.*",
         "symfony/mailer": "5.2.*",
         "symfony/mime": "5.2.*",
-        "symfony/monolog-bundle": "^3.1",
+        "symfony/monolog-bundle": "^3.7",
         "symfony/notifier": "5.2.*",
         "symfony/polyfill-intl-messageformatter": "^1.22",
         "symfony/process": "5.2.*",
@@ -46,12 +48,11 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-master"
-        ,
+        "roave/security-advisories": "dev-master",
         "symfony/browser-kit": "^5.2",
         "symfony/css-selector": "^5.2",
         "symfony/debug-bundle": "^5.2",
-        "symfony/maker-bundle": "^1.0",
+        "symfony/maker-bundle": "^1.31",
         "symfony/phpunit-bridge": "^5.2",
         "symfony/stopwatch": "^5.2",
         "symfony/var-dumper": "^5.2",

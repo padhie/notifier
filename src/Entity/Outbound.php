@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Outbound
 {
+    public const ALLOWED_TYPES = ['raw', 'json'];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -39,6 +41,11 @@ class Outbound
      * @ORM\Column(type="text", nullable=false)
      */
     private string $body;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private string $type;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -105,6 +112,26 @@ class Outbound
     public function setBody(string $body): self
     {
         $this->body = $body;
+
+        return $this;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        if (!in_array($type, self::ALLOWED_TYPES, true)) {
+            throw new \Exception(sprintf(
+                'Type %s is not allowed. Allowed types are %s',
+                $type,
+                implode(',', self::ALLOWED_TYPES)
+            ));
+        }
+
+        $this->type = $type;
 
         return $this;
     }
