@@ -5103,16 +5103,16 @@
         },
         {
             "name": "symfony/polyfill-intl-messageformatter",
-            "version": "v1.38.0",
+            "version": "v1.43.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-messageformatter.git",
-                "reference": "62cbeebabc201dbdf515243ccaf0f087ca988e1d"
+                "reference": "dfa56f95dd56818a2262ef34a0d6bf8ccaa5922f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-messageformatter/zipball/62cbeebabc201dbdf515243ccaf0f087ca988e1d",
-                "reference": "62cbeebabc201dbdf515243ccaf0f087ca988e1d",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-messageformatter/zipball/dfa56f95dd56818a2262ef34a0d6bf8ccaa5922f",
+                "reference": "dfa56f95dd56818a2262ef34a0d6bf8ccaa5922f",
                 "shasum": ""
             },
             "require": {
@@ -5164,7 +5164,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-messageformatter/tree/v1.38.0"
+                "source": "https://github.com/symfony/polyfill-intl-messageformatter/tree/v1.43.3"
             },
             "funding": [
                 {
@@ -5184,7 +5184,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-25T15:05:24+00:00"
+            "time": "2026-10-28T09:42:05+00:00"
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
